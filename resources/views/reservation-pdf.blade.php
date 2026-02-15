@@ -1,35 +1,37 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>تأكيد حجز موعد - مخبر المنيعة</title>
+    <title>Confirmation de Rendez-vous - Labo El Meniaa</title>
     <style>
         @page {
-            margin: 2cm 1.5cm;
+            margin: 1.5cm;
         }
 
         body {
-            font-family: DejaVu Sans, sans-serif;
-            direction: rtl;
-            text-align: right;
-            font-size: 12pt;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 11pt;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .header {
             text-align: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 3px solid #2c3e50;
+            border-bottom: 2px solid #2c3e50;
         }
 
         .header h1 {
             color: #2c3e50;
             font-size: 24pt;
-            margin: 0 0 10px 0;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .header p {
@@ -38,7 +40,7 @@
             margin: 5px 0;
         }
 
-        .document-title {
+        .doc-title {
             background-color: #3498db;
             color: white;
             padding: 12px;
@@ -46,265 +48,245 @@
             font-size: 16pt;
             font-weight: bold;
             margin: 20px 0;
-            border-radius: 5px;
+            border-radius: 4px;
+            text-transform: uppercase;
         }
 
         .section {
-            margin: 25px 0;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-right: 4px solid #3498db;
+            margin-bottom: 25px;
         }
 
         .section-title {
             color: #2c3e50;
-            font-size: 14pt;
+            font-size: 13pt;
             font-weight: bold;
             margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #3498db;
         }
 
-        .info-row {
-            margin: 10px 0;
-            padding: 8px;
-            background-color: white;
+        .info-table {
+            width: 100%;
+            margin-bottom: 10px;
         }
 
-        .info-label {
+        .info-table td {
+            padding: 8px 0;
+            vertical-align: top;
+        }
+
+        .label {
             font-weight: bold;
             color: #2c3e50;
-            display: inline-block;
-            width: 150px;
+            width: 200px;
         }
 
-        .info-value {
-            color: #555;
+        .value {
+            color: #333;
         }
 
-        table {
+        table.analysis-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
-            background-color: white;
+            margin-top: 10px;
         }
 
-        table th {
-            background-color: #3498db;
-            color: white;
+        table.analysis-table th {
+            background-color: #f8f9fa;
+            color: #2c3e50;
             padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #3498db;
+            font-size: 10pt;
+            text-transform: uppercase;
+        }
+
+        table.analysis-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 10pt;
+        }
+
+        .price-col {
             text-align: right;
             font-weight: bold;
+        }
+
+        .total-container {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .total-box {
+            display: inline-block;
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+        }
+
+        .total-label {
+            font-size: 12pt;
+            margin-right: 15px;
+        }
+
+        .total-amount {
+            font-size: 16pt;
+            font-weight: bold;
+        }
+
+        .instructions-box {
+            background-color: #fffde7;
+            border: 1px solid #fff59d;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .instructions-title {
+            color: #f9a825;
+            font-weight: bold;
+            margin-bottom: 10px;
             font-size: 11pt;
         }
 
-        table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #e0e0e0;
-            text-align: right;
-        }
-
-        table tr:nth-child(even) {
+        .important-notes {
+            margin-top: 30px;
+            padding: 15px;
             background-color: #f8f9fa;
+            border-radius: 4px;
+            font-size: 10pt;
         }
 
-        .preparation {
-            background-color: #fff3cd;
-            padding: 10px;
-            border-right: 3px solid #ffc107;
-            margin: 8px 0;
-            font-size: 10pt;
+        .important-notes h3 {
+            margin-top: 0;
+            font-size: 11pt;
+            color: #2c3e50;
         }
 
         .footer {
-            margin-top: 40px;
+            margin-top: 50px;
+            text-align: center;
+            font-size: 9pt;
+            color: #95a5a6;
+            border-top: 1px solid #eee;
             padding-top: 20px;
-            border-top: 2px solid #e0e0e0;
-            text-align: center;
-            font-size: 10pt;
-            color: #7f8c8d;
         }
 
-        .footer-info {
-            margin: 5px 0;
-        }
-
-        .important-note {
-            background-color: #e8f5e9;
-            border: 2px solid #4caf50;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .important-note strong {
-            color: #2e7d32;
-            font-size: 11pt;
-        }
-
-        .price {
-            color: #27ae60;
-            font-weight: bold;
-        }
-
-        .total-section {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-        }
-
-        .total-section .total-label {
-            font-size: 14pt;
-            margin-bottom: 5px;
-        }
-
-        .total-section .total-amount {
-            font-size: 18pt;
-            font-weight: bold;
+        .footer p {
+            margin: 3px 0;
         }
     </style>
 </head>
 
 <body>
-    {{-- Header --}}
     <div class="header">
-        <h1>مخبر المنيعة</h1>
-        <p>مخبر تحليلات طبية متخصص</p>
-        <p>Labo_dz - Laboratory of Medical Analysis</p>
+        <h1>LABORATOIRE EL MENIAA</h1>
+        <p>Expertise en Analyses Médicales & Diagnostics</p>
+        <p>Cité de l'Indépendance, El Meniaa, Algérie</p>
     </div>
 
-    {{-- Document Title --}}
-    <div class="document-title">
-        تأكيد طلب حجز موعد
+    <div class="doc-title">
+        CONFIRMATION DE RENDEZ-VOUS
     </div>
 
-    {{-- Patient Information --}}
     <div class="section">
-        <div class="section-title">معلومات المريض</div>
-        <div class="info-row">
-            <span class="info-label">الاسم الكامل:</span>
-            <span class="info-value">{{ $reservation->name }}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">رقم الهاتف:</span>
-            <span class="info-value">{{ $reservation->phone }}</span>
-        </div>
-        @if($reservation->email)
-        <div class="info-row">
-            <span class="info-label">البريد الإلكتروني:</span>
-            <span class="info-value">{{ $reservation->email }}</span>
-        </div>
-        @endif
-        <div class="info-row">
-            <span class="info-label">الجنس:</span>
-            <span class="info-value">{{ $reservation->gender == 'male' ? 'ذكر' : 'أنثى' }}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">تاريخ الميلاد:</span>
-            <span class="info-value">{{ \Carbon\Carbon::parse($reservation->birth_date)->format('Y/m/d') }}</span>
-        </div>
+        <div class="section-title">INFORMATIONS DU PATIENT</div>
+        <table class="info-table">
+            <tr>
+                <td class="label">Nom Complet :</td>
+                <td class="value">{{ $reservation->name }}</td>
+            </tr>
+            <tr>
+                <td class="label">Téléphone :</td>
+                <td class="value">{{ $reservation->phone }}</td>
+            </tr>
+            @if($reservation->email)
+            <tr>
+                <td class="label">E-mail :</td>
+                <td class="value">{{ $reservation->email }}</td>
+            </tr>
+            @endif
+            <tr>
+                <td class="label">Sexe :</td>
+                <td class="value">{{ $reservation->gender == 'male' ? 'Masculin' : 'Féminin' }}</td>
+            </tr>
+            <tr>
+                <td class="label">Date de Naissance :</td>
+                <td class="value">{{ \Carbon\Carbon::parse($reservation->birth_date)->format('d/m/Y') }}</td>
+            </tr>
+            <tr>
+                <td class="label">Date du Rendez-vous :</td>
+                <td class="value">{{ \Carbon\Carbon::parse($reservation->date)->format('d/m/Y') }} à {{ $reservation->time }}</td>
+            </tr>
+        </table>
     </div>
 
-    {{-- Appointment Information --}}
     <div class="section">
-        <div class="section-title">معلومات الموعد المفضل</div>
-        <div class="info-row">
-            <span class="info-label">التاريخ المفضل:</span>
-            <span class="info-value">{{ $reservation->preferred_date ? \Carbon\Carbon::parse($reservation->preferred_date)->format('Y/m/d') : 'لم يحدد' }}</span>
-        </div>
-        <div class="info-row">
-            <span class="info-label">الوقت المفضل:</span>
-            <span class="info-value">{{ $reservation->preferred_time ? \Carbon\Carbon::parse($reservation->preferred_time)->format('H:i') : 'لم يحدد' }}</span>
-        </div>
-    </div>
-
-    {{-- Analysis Information --}}
-    <div class="section">
-        <div class="section-title">التحاليل المطلوبة</div>
-
-        <table>
+        <div class="section-title">ANALYSES DEMANDÉES</div>
+        <table class="analysis-table">
             <thead>
                 <tr>
-                    <th style="width: 5%">#</th>
-                    <th style="width: 30%">اسم التحليل</th>
-                    <th style="width: 40%">الوصف</th>
-                    <th style="width: 15%">المدة</th>
-                    <th style="width: 10%">السعر</th>
+                    <th style="width: 50%">Désignation de l'Analyse</th>
+                    <th style="width: 25%">Délai de Résultat</th>
+                    <th style="width: 25%; text-align: right;">Prix Unitaire</th>
                 </tr>
             </thead>
             <tbody>
                 @php $total = 0; @endphp
-                @foreach($reservation->analyses as $index => $analysis)
+                @foreach($reservation->analyses as $analysis)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td><strong>{{ $analysis->name }}</strong></td>
-                    <td>{{ $analysis->description ?? 'لا يوجد وصف' }}</td>
-                    <td>{{ $analysis->duration ?? 'غير محدد' }}</td>
-                    <td class="price">{{ number_format($analysis->price, 2) }} دج</td>
+                    <td><strong>{{ $analysis->name_fr }}</strong></td>
+                    <td>{{ str_replace(['ساعة', 'ساعات', 'يوم', 'أيام'], ['heure(s)', 'heure(s)', 'jour(s)', 'jour(s)'], $analysis->duration) }}</td>
+                    <td class="price-col">{{ number_format($analysis->price, 2) }} DA</td>
                 </tr>
                 @php $total += $analysis->price; @endphp
                 @endforeach
             </tbody>
         </table>
 
-        {{-- Total Price --}}
-        @if(count($reservation->analyses) > 1)
-        <div class="total-section">
-            <div class="total-label">المجموع الإجمالي</div>
-            <div class="total-amount">{{ number_format($total, 2) }} دج</div>
+        <div class="total-container">
+            <div class="total-box">
+                <span class="total-label">MONTANT TOTAL :</span>
+                <span class="total-amount">{{ number_format($total, 2) }} DA</span>
+            </div>
         </div>
-        @endif
     </div>
 
-    {{-- Preparation Instructions --}}
     @php
     $hasPreparation = $reservation->analyses->filter(function($analysis) {
-    return !empty($analysis->preparation_instructions);
+        return !empty($analysis->preparation_fr);
     })->count() > 0;
     @endphp
 
     @if($hasPreparation)
     <div class="section">
-        <div class="section-title">تعليمات التحضير للتحاليل</div>
-        <div class="important-note">
-            <strong>مهم جداً:</strong> يرجى اتباع التعليمات التالية بدقة للحصول على نتائج دقيقة
+        <div class="section-title">CONSIGNES DE PRÉPARATION</div>
+        <div class="instructions-box">
+            <div class="instructions-title">Important : Veuillez suivre ces instructions pour garantir la précision des résultats</div>
+            @foreach($reservation->analyses as $analysis)
+            @if($analysis->preparation_fr)
+            <p style="margin: 8px 0;"><strong>- {{ $analysis->name_fr }} :</strong> {{ $analysis->preparation_fr }}</p>
+            @endif
+            @endforeach
         </div>
-
-        @foreach($reservation->analyses as $analysis)
-        @if($analysis->preparation_instructions)
-        <div class="preparation">
-            <strong>{{ $analysis->name }}:</strong><br>
-            {{ $analysis->preparation_instructions }}
-        </div>
-        @endif
-        @endforeach
     </div>
     @endif
 
-    {{-- Important Notes --}}
-    <div class="section">
-        <div class="section-title">ملاحظات هامة</div>
-        <div style="padding: 10px; line-height: 1.8;">
-            <p>• هذا الطلب في حالة <strong>قيد الانتظار</strong> وسيتم الاتصال بك لتأكيد الموعد النهائي</p>
-            <p>• يرجى إحضار هذه الوثيقة عند الحضور إلى المخبر</p>
-            <p>• في حالة وجود أي استفسارات، يرجى الاتصال بنا على الأرقام الموضحة أدناه</p>
-            <p>• يرجى الحضور قبل 15 دقيقة من الموعد المحدد</p>
-            <p>• في حالة الرغبة في إلغاء أو تعديل الموعد، يرجى الاتصال بنا قبل 24 ساعة على الأقل</p>
-        </div>
+    <div class="important-notes">
+        <h3>REMARQUES IMPORTANTES</h3>
+        <ul style="margin: 0; padding-left: 20px;">
+            <li>Ce document est une confirmation de demande de rendez-vous.</li>
+            <li>Veuillez vous présenter au laboratoire 15 minutes avant l'heure fixée.</li>
+            <li>En cas d'empêchement, merci de nous prévenir au moins 24 heures à l'avance.</li>
+            <li>N'oubliez pas d'apporter votre pièce d'identité et ce document.</li>
+        </ul>
     </div>
 
-    {{-- Footer --}}
     <div class="footer">
-        <div class="footer-info"><strong>العنوان:</strong> شارع الاستقلال، المنيعة</div>
-        <div class="footer-info"><strong>الهاتف:</strong> 0550123456</div>
-        <div class="footer-info"><strong>البريد الإلكتروني:</strong> info@labo-dz.com</div>
-        <div class="footer-info"><strong>أوقات العمل:</strong> 8:00 صباحاً - 6:00 مساءً</div>
-        <div style="margin-top: 15px; color: #95a5a6; font-size: 9pt;">
-            تم إصدار هذه الوثيقة بتاريخ {{ \Carbon\Carbon::now()->format('Y/m/d H:i') }}
-        </div>
+        <p><strong>Adresse :</strong> Cité de l'Indépendance, El Meniaa | <strong>Tel :</strong> 0550 12 34 56</p>
+        <p><strong>E-mail :</strong> info@labo-elmeniaa.dz | <strong>Horaires :</strong> 08:00 - 18:00</p>
+        <p style="margin-top: 15px;">Document généré le {{ \Carbon\Carbon::now()->format('d/m/Y à H:i') }}</p>
     </div>
 </body>
 

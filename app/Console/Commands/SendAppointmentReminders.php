@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\History;
+use App\Models\Reservation;
 use App\Models\Reminder;
 use App\Models\Patient;
 use App\Models\Analyse;
@@ -37,11 +37,14 @@ class SendAppointmentReminders extends Command
     {
         $this->info('Starting appointment reminders process...');
 
-        // Get confirmed appointments that are 24 hours away
-        $appointments = History::with(['patient', 'analyse'])
-            ->where('status', 'confirmed')
-            ->where('analysis_date', '>=', now())
-            ->where('analysis_date', '<=', now()->addDay())
+        // Get reservations for tomorrow that haven't had a reminder sent yet
+        $tomorrow = Carbon::tomorrow()->toDateString();
+        $appointments = Reservation::with(['patient', 'reservationAnalyses.analyse', 'reminders'])
+            ->where('status', 'booked')
+            ->where('analysis_date', $tomorrow)
+            ->whereDoesntHave('reminders', function ($query) {
+                $query->where('is_sent', true);
+            })
             ->get();
 
         $this->info("Found {$appointments->count()} appointments within 24 hours");
@@ -52,22 +55,23 @@ class SendAppointmentReminders extends Command
         foreach ($appointments as $appointment) {
             try {
                 // Check if reminder already exists
-                $existingReminder = Reminder::where('history_id', $appointment->id)
+                $existingReminder = Reminder::where('reservation_id', $appointment->id)
                     ->where('patient_id', $appointment->patient_id)
                     ->first();
 
                 if ($existingReminder && $existingReminder->is_sent) {
-                    $this->info("Reminder already sent for appointment ID: {$appointment->id}");
+                    $this->info("Reminder already sent for reservation ID: {$appointment->id}");
                     continue;
                 }
 
                 // Create or update reminder record
                 if (!$existingReminder) {
                     $reminder = Reminder::create([
-                        'history_id' => $appointment->id,
+                        'reservation_id' => $appointment->id,
                         'patient_id' => $appointment->patient_id,
-                        'analyse_id' => $appointment->analyse_id,
-                        'scheduled_for' => Carbon::parse($appointment->analysis_date)->subDay(), // 24 hours before
+                        'analyse_id' => $appointment->reservationAnalyses->first()->analysis_id ?? 0, // Fallback
+                        'scheduled_for' => Carbon::parse($appointment->analysis_date)->subDay(),
+                        'history_id' => null,
                     ]);
                 } else {
                     $reminder = $existingReminder;
@@ -75,14 +79,16 @@ class SendAppointmentReminders extends Command
 
                 // Send email
                 if ($appointment->patient->email) {
+                    $analyses = $appointment->reservationAnalyses->map(fn($ra) => $ra->analyse);
+                    
                     Mail::send('emails.appointment-reminder', [
                         'patient' => $appointment->patient,
-                        'analysis' => $appointment->analyse,
+                        'analyses' => $analyses,
                         'appointment_date' => Carbon::parse($appointment->analysis_date)->format('Y-m-d'),
                         'appointment_time' => $appointment->time,
                     ], function ($message) use ($appointment) {
                         $message->to($appointment->patient->email)
-                                ->subject('تذكير بموعد التحليل الطبي - مخبر ورقلة');
+                                ->subject('تذكير بموعد التحاليل الطبية - مخبر المنيعة');
                     });
 
                     // Update reminder as sent
@@ -92,7 +98,7 @@ class SendAppointmentReminders extends Command
                     ]);
 
                     $sentCount++;
-                    $this->info("Reminder sent to: {$appointment->patient->name} ({$appointment->patient->email})");
+                    $this->info("Grouped reminder sent to: {$appointment->patient->name} ({$appointment->patient->email})");
                 } else {
                     $this->warn("No email for patient: {$appointment->patient->name}");
                 }

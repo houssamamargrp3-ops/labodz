@@ -158,15 +158,19 @@
                     <input type="date" id="birth_date" name="birth_date" required>
                 </div>
                 <div class="form-group">
-                    <label for="analysisTypes">أنواع التحاليل <span class="required">*</span></label>
-                    <select name="analysisTypes[]" id="analysisTypes" multiple required>
-                        @foreach ($analyses as $analysis)
-                        <option value="{{ $analysis->id }}">
-                            {{ $analysis->name }}
-                        </option>
-                        @endforeach
-                    </select>
-                    <small class="form-text text-muted">اضغط مع Ctrl (أو Cmd على Mac) لاختيار أكثر من تحليل</small>
+                    <label>أنواع التحاليل <span class="required">*</span></label>
+
+                    <div class="checkbox-grid">
+                      @foreach ($analyses as $analysis)
+                        @if($analysis->availability == 1)
+                       <div class="checkbox-item">
+                  <input type="checkbox" name="analysisTypes[]" value="{{ $analysis->id }}" id="analysis_{{ $analysis->id }}">
+                 <label for="analysis_{{ $analysis->id }}">{{ $analysis->name }}</label>
+                  </div>
+                       @endif
+                           @endforeach
+                           </div>
+                            <small class="form-text text-muted">يمكنك اختيار تحليل واحد أو أكثر من القائمة أعلاه</small>
                 </div>
                 <div class="form-group">
                     <label for="date">التاريخ</label>
@@ -248,30 +252,36 @@
         </div>
     </footer>
 
-    {{-- Auto-trigger PDF download after successful booking --}}
-    @if(session('download_pdf'))
+    {{-- Auto-trigger PDF download and form validation --}}
     <script>
-        // Automatically download PDF after page loads
         window.addEventListener('load', function() {
-            var reservationId = {
-                {
-                    session('download_pdf')
-                }
-            };
-            var downloadUrl = '{{ url("/reservation") }}/' + reservationId + '/pdf';
+            // 1. Auto-download PDF if session exists
+            @if(session('download_pdf'))
+                var reservationId = {{ session('download_pdf') }};
+                var downloadUrl = '{{ url("/reservation") }}/' + reservationId + '/pdf';
+                
+                var link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = 'reservation_confirmation.pdf';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            @endif
 
-            // Create a hidden link and trigger click
-            var link = document.createElement('a');
-            link.href = downloadUrl;
-            link.download = 'reservation_confirmation.pdf';
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // 2. Client-side validation for analysis selection
+            const bookingForm = document.getElementById('bookingForm');
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', function(e) {
+                    const checkboxes = this.querySelectorAll('input[name="analysisTypes[]"]:checked');
+                    if (checkboxes.length === 0) {
+                        e.preventDefault();
+                        alert('يرجى اختيار تحليل واحد على الأقل');
+                    }
+                });
+            }
         });
     </script>
-    @endif
-
 </body>
 
 </html>

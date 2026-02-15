@@ -1,12 +1,11 @@
 <?php
 
+use App\Http\Controllers\analysesController;
 use App\Http\Controllers\authController;
-
 use App\Http\Controllers\dashboradController;
 use App\Http\Controllers\Labo_dzController;
-use App\Http\Controllers\reservationsController;
-use App\Http\Controllers\analysesController;
 use App\Http\Controllers\messagesController;
+use App\Http\Controllers\reservationsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +36,6 @@ Route::post('/auth/logout', [authController::class, 'logout'])->name('administra
 
 // Admin (Dashboard) Routes
 Route::middleware('auth:administrator')->group(function () {
-
     // Dashboard Main
     Route::get('/dashboard', [dashboradController::class, 'dashboard'])->name('dashboard');
 
@@ -51,6 +49,18 @@ Route::middleware('auth:administrator')->group(function () {
         Route::get('/requests', [reservationsController::class, 'reservationRequests'])->name('reservation.requests');
         Route::post('/requests/{id}/confirm', [reservationsController::class, 'confirmRequest'])->name('reservation.requests.confirm');
         Route::post('/requests/{id}/reject', [reservationsController::class, 'rejectRequest'])->name('reservation.requests.reject');
+
+        // Execution Eligibility Check
+        Route::post('/{id}/check-eligibility', [reservationsController::class, 'checkExecutionEligibility'])->name('admin.bookings.check-eligibility');
+        Route::get('/{id}/eligibility-check', [reservationsController::class, 'showEligibilityCheck'])->name('admin.bookings.eligibility.form');
+        Route::post('/{id}/eligibility-check', [reservationsController::class, 'submitEligibilityCheck'])->name('admin.bookings.eligibility.submit');
+
+        // Unified Reservation Eligibility Check
+        Route::get('/{id}/full-eligibility', [reservationsController::class, 'showFullEligibilityCheck'])->name('admin.bookings.full-eligibility.form');
+        Route::post('/{id}/full-eligibility', [reservationsController::class, 'submitFullEligibilityCheck'])->name('admin.bookings.full-eligibility.submit');
+
+        // Individual Analysis Status Update
+        Route::put('/analysis/{id}/status', [reservationsController::class, 'updateAnalysisStatus'])->name('admin.bookings.analysis.status.update');
     });
 
     // Analyses

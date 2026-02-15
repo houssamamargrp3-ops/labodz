@@ -67,6 +67,7 @@ body {
     display: grid;
     grid-template-columns: 280px 1fr;
     min-height: calc(100vh - 80px);
+    width: 100%;
 }
 
 /* Sidebar Styles */
@@ -117,6 +118,9 @@ body {
     padding: 30px;
     background: var(--gray-100);
     min-height: calc(100vh - 80px);
+    min-width: 0;
+    /* Important for grid/flex overflow */
+    overflow-x: hidden;
 }
 
 /* Common Components */
@@ -133,11 +137,30 @@ body {
     text-decoration: none;
 }
 
-.btn-primary { background: var(--secondary); color: white; }
-.btn-success { background: var(--accent); color: white; }
-.btn-danger { background: var(--danger); color: white; }
-.btn-warning { background: var(--warning); color: white; }
-.btn-secondary { background: #6c757d; color: white; }
+.btn-primary {
+    background: var(--secondary);
+    color: white;
+}
+
+.btn-success {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-warning {
+    background: var(--warning);
+    color: white;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
 
 .btn:hover {
     transform: translateY(-2px);
@@ -162,8 +185,13 @@ body {
     transform: translateX(0);
 }
 
-.notification.success { background: var(--accent); }
-.notification.error { background: var(--danger); }
+.notification.success {
+    background: var(--accent);
+}
+
+.notification.error {
+    background: var(--danger);
+}
 
 /* Section Header */
 .section-header {
@@ -316,6 +344,7 @@ body {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -326,6 +355,7 @@ body {
         transform: translateX(100%);
         opacity: 0;
     }
+
     to {
         transform: translateX(0);
         opacity: 1;
@@ -337,6 +367,7 @@ body {
         transform: translateY(30px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
@@ -374,8 +405,13 @@ body {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .login-redirect {

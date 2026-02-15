@@ -25,4 +25,17 @@ class Patient extends Model
     public function histories(){
         return $this->hasMany(History::class);
     }
+
+    /**
+     * Get the answers provided by the patient.
+     */
+    public function patientAnswers()
+    {
+        return $this->hasMany(PatientAnswer::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

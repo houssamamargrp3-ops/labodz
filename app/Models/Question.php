@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class History extends Model
+class Question extends Model
 {
     use HasFactory;
 
@@ -15,29 +15,23 @@ class History extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'patient_id',
+        'question',
         'analyse_id',
-        'analysis_date',
-        'time',
-        'status',
-        'result',
     ];
 
-    public function patient()
-    {
-        return $this->belongsTo(Patient::class);
-    }
-
+    /**
+     * Get the analysis that owns the question.
+     */
     public function analyse()
     {
         return $this->belongsTo(Analyse::class);
     }
 
     /**
-     * Get the reminders for the history entry.
+     * Get the options for the question.
      */
-    public function reminders()
+    public function options()
     {
-        return $this->hasMany(Reminder::class);
+        return $this->hasMany(Option::class);
     }
 }

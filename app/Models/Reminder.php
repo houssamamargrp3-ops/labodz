@@ -13,21 +13,27 @@ class Reminder extends Model
         'history_id',
         'patient_id',
         'analyse_id',
+        'reservation_id',
         'scheduled_for',
         'sent_at',
         'is_sent',
-        'error_message'
+        'error_message',
     ];
 
     protected $casts = [
         'scheduled_for' => 'datetime',
         'sent_at' => 'datetime',
-        'is_sent' => 'boolean'
+        'is_sent' => 'boolean',
     ];
 
     public function history()
     {
         return $this->belongsTo(History::class);
+    }
+
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
     }
 
     public function patient()

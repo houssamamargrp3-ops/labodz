@@ -14,7 +14,11 @@ class messagesController extends Controller
     public function messages()
     {
         $messages = Message::orderBy('created_at', 'desc')->paginate(10);
-        $patients = Patient::with('histories.analyse')->get();
+        
+        // Fetch patients with their reservations and related analyses
+        $patients = Patient::with(['reservations' => function($query) {
+            $query->where('status', '!=', 'completed')->with('reservationAnalyses.analyse');
+        }])->get();
 
         return view('Adminstration.messages', compact('messages', 'patients'));
     }
@@ -60,12 +64,12 @@ class messagesController extends Controller
     public function sendResult(Request $request)
     {
         $validated = $request->validate([
-            'history_id' => 'required|exists:histories,id',
+            'reservation_id' => 'required|exists:reservations,id',
             'additional_notes' => 'nullable|string',
             'result_file' => 'nullable|file|mimes:pdf,jpg,png|max:10240',
         ]);
 
-        $history = History::with(['patient', 'analyse'])->findOrFail($validated['history_id']);
+        $reservation = \App\Models\Reservation::with(['patient', 'reservationAnalyses.analyse'])->findOrFail($validated['reservation_id']);
 
         try {
             $attachmentPath = null;
@@ -73,30 +77,36 @@ class messagesController extends Controller
                 $attachmentPath = $request->file('result_file')->store('results', 'public');
             }
 
-            // Update history with result
-            $history->update([
-                'result' => $validated['additional_notes'],
+            // Update reservation with result details and mark as completed
+            $reservation->update([
+                'result_notes' => $validated['additional_notes'],
+                'result_file_path' => $attachmentPath,
                 'status' => 'completed'
             ]);
 
-            // Send result email
+            // Also mark all individual analyses in this reservation as completed
+            $reservation->reservationAnalyses()->update(['status' => 'completed']);
+
+            // Send grouped result email
             Mail::send('emails.test-result', [
-                'patient' => $history->patient,
-                'history' => $history,
+                'patient' => $reservation->patient,
+                'reservation' => $reservation,
                 'additional_notes' => $validated['additional_notes']
-            ], function ($message) use ($history, $attachmentPath) {
-                $message->to($history->patient->email)
-                        ->subject('نتيجة تحليل ' . $history->analyse->name);
+            ], function ($message) use ($reservation, $attachmentPath) {
+                $testNames = $reservation->reservationAnalyses->map(fn($ra) => $ra->analyse->name)->implode(' و ');
+                
+                $message->to($reservation->patient->email)
+                        ->subject('نتائج التحاليل الطبية: ' . $testNames);
 
                 if ($attachmentPath) {
                     $message->attach(storage_path('app/public/' . $attachmentPath));
                 }
             });
 
-            return redirect()->route('messages')->with('success', 'تم إرسال نتيجة التحليل بنجاح إلى ' . $history->patient->name);
+            return redirect()->route('messages')->with('success', 'تم إرسال نتائج التحاليل بنجاح إلى ' . $reservation->patient->name);
 
         } catch (\Exception $e) {
-            return redirect()->route('messages')->with('error', 'فشل في إرسال النتيجة: ' . $e->getMessage());
+            return redirect()->route('messages')->with('error', 'فشل في إرسال النتائج: ' . $e->getMessage());
         }
     }
 

@@ -20,13 +20,14 @@ class Request_reservation extends Model
         'status',
         'admin_notes',
         'patient_id',
-        'history_id'
+        'history_id',
+        'reservation_id',
     ];
 
     protected $casts = [
         'preferred_date' => 'date',
         'preferred_time' => 'datetime:H:i',
-        'birth_date' => 'date'
+        'birth_date' => 'date',
     ];
 
     public function analyses()
@@ -48,5 +49,10 @@ class Request_reservation extends Model
     public function history()
     {
         return $this->belongsTo(History::class);
+    }
+
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
     }
 }

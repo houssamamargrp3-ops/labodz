@@ -23,7 +23,7 @@ class Analyse extends Model
         'duration',
         'preparation_instructions',
         'image',
-        'availability'
+        'availability',
     ];
 
     protected $casts = [
@@ -39,5 +39,26 @@ class Analyse extends Model
     public function requestReservations()
     {
         return $this->belongsToMany(Request_reservation::class, 'request_reservation_analyses');
+    }
+
+    /**
+     * Get the questions for the medical analysis.
+     */
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    /**
+     * Get the rules established for this analysis.
+     */
+    public function analysisRules()
+    {
+        return $this->hasMany(AnalysisRule::class, 'analysis_id');
+    }
+
+    public function reservationAnalyses()
+    {
+        return $this->hasMany(ReservationAnalysis::class);
     }
 }

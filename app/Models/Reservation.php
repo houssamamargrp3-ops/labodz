@@ -5,22 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class History extends Model
+class Reservation extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'patient_id',
-        'analyse_id',
         'analysis_date',
         'time',
         'status',
-        'result',
+        'result_notes',
+        'result_file_path'
     ];
 
     public function patient()
@@ -28,14 +23,16 @@ class History extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function analyse()
+    public function reservationAnalyses()
     {
-        return $this->belongsTo(Analyse::class);
+        return $this->hasMany(ReservationAnalysis::class);
     }
 
-    /**
-     * Get the reminders for the history entry.
-     */
+    public function analyses()
+    {
+        return $this->belongsToMany(Analyse::class, 'reservation_analyses');
+    }
+
     public function reminders()
     {
         return $this->hasMany(Reminder::class);

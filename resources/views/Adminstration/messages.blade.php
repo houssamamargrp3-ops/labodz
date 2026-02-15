@@ -137,13 +137,13 @@
                     @csrf
                     <div class="form-group">
                         <label>اختر حجز المريض *</label>
-                        <select name="history_id" class="form-control" required>
-                            <option value="">اختر حجز المريض</option>
+                        <select name="reservation_id" class="form-control" required>
+                            <option value="">اختر حجز المريض (Visit)</option>
                             @foreach($patients as $patient)
-                                @foreach($patient->histories as $history)
-                                    @if($history->status != 'completed')
-                                        <option value="{{ $history->id }}">
-                                            {{ $patient->name }} - {{ $history->analyse->name }} - {{ $history->analysis_date }}
+                                @foreach($patient->reservations as $reservation)
+                                    @if($reservation->status != 'completed')
+                                        <option value="{{ $reservation->id }}">
+                                            {{ $patient->name }} - [{{ $reservation->reservationAnalyses->map(fn($ra) => $ra->analyse->name)->implode(', ') }}] - {{ $reservation->analysis_date }}
                                         </option>
                                     @endif
                                 @endforeach

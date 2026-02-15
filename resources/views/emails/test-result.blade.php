@@ -67,15 +67,22 @@
         <div class="content">
             <div class="result-info">
                 <p><strong>اسم المريض:</strong> {{ $patient->name }}</p>
-                <p><strong>نوع التحليل:</strong> {{ $history->analyse->name }}</p>
-                <p><strong>تاريخ التحليل:</strong> {{ $history->analysis_date }}</p>
-                <p><strong>وقت التحليل:</strong> {{ $history->time }}</p>
+                <p><strong>تاريخ الحجز:</strong> {{ $reservation->analysis_date }}</p>
+                <p><strong>وقت الحجز:</strong> {{ $reservation->time }}</p>
             </div>
             
             <div class="analysis-details">
-                <h3>تفاصيل التحليل:</h3>
-                <p>{{ $history->analyse->description }}</p>
-                <p><strong>المعدل الطبيعي:</strong> {{ $history->analyse->normal_range ?? 'غير محدد' }}</p>
+                <h3>التحاليل المشمولة في هذه النتيجة:</h3>
+                <ul>
+                    @foreach($reservation->reservationAnalyses as $ra)
+                        <li>
+                            <strong>{{ $ra->analyse->name }}</strong>
+                            @if($ra->analyse->normal_range)
+                                <br><small>المعدل الطبيعي: {{ $ra->analyse->normal_range }}</small>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
             </div>
             
             @if($additional_notes)

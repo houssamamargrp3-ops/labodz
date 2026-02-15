@@ -62,7 +62,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>مخبر ورقلة</h1>
+            <h1>مخبر المنيعة</h1>
             <h2>تذكير بموعد التحليل الطبي</h2>
         </div>
 
@@ -73,7 +73,12 @@
 
             <div class="appointment-details">
                 <h3>تفاصيل الموعد:</h3>
-                <p><strong>نوع التحليل:</strong> {{ $analysis->name }}</p>
+                <p><strong>التحاليل المطلوبة:</strong></p>
+                <ul>
+                    @foreach($analyses as $analysis)
+                        <li>{{ $analysis->name }}</li>
+                    @endforeach
+                </ul>
                 <p><strong>التاريخ:</strong> {{ $appointment_date }}</p>
                 <p><strong>الوقت:</strong> {{ $appointment_time }}</p>
                 @if($patient->phone)
@@ -91,11 +96,11 @@
                 </ul>
             </div>
 
-            <p>若有任何疑问，请随时联系我们。</p>
+            <p>إذا كان لديكم أي استفسار، فلا تترددوا في الاتصال بنا.</p>
         </div>
 
         <div class="footer">
-            <p>مع تحيات،<br>فريق مخبر ورقلة</p>
+            <p>مع تحيات،<br>فريق مخبر المنيعة</p>
             <p>هذا البريد الإلكتروني مرسل تلقائياً، يرجى عدم الرد عليه</p>
             <p>للتواصل معنا: {{ config('mail.from.address') }}</p>
         </div>
