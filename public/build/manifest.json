@@ -1,0 +1,62 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/css/dashboard/analyses.css": {
+    "file": "assets/analyses-f6aa2f3f.css",
+    "isEntry": true,
+    "src": "resources/css/dashboard/analyses.css"
+  },
+  "resources/css/dashboard/base.css": {
+    "file": "assets/base-de3c73fc.css",
+    "isEntry": true,
+    "src": "resources/css/dashboard/base.css"
+  },
+  "resources/css/dashboard/dashboard.css": {
+    "file": "assets/dashboard-04b2d09b.css",
+    "isEntry": true,
+    "src": "resources/css/dashboard/dashboard.css"
+  },
+  "resources/css/dashboard/messages.css": {
+    "file": "assets/messages-829ddaf2.css",
+    "isEntry": true,
+    "src": "resources/css/dashboard/messages.css"
+  },
+  "resources/css/dashboard/reservations.css": {
+    "file": "assets/reservations-3631b6ea.css",
+    "isEntry": true,
+    "src": "resources/css/dashboard/reservations.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-5de49e8f.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/dashboard/analyses.js": {
+    "file": "assets/analyses-b2e71f72.js",
+    "isEntry": true,
+    "src": "resources/js/dashboard/analyses.js"
+  },
+  "resources/js/dashboard/base.js": {
+    "file": "assets/base-e6420d80.js",
+    "isEntry": true,
+    "src": "resources/js/dashboard/base.js"
+  },
+  "resources/js/dashboard/dashboard.js": {
+    "file": "assets/dashboard-8756a825.js",
+    "isEntry": true,
+    "src": "resources/js/dashboard/dashboard.js"
+  },
+  "resources/js/dashboard/messages.js": {
+    "file": "assets/messages-7be5dcc9.js",
+    "isEntry": true,
+    "src": "resources/js/dashboard/messages.js"
+  },
+  "resources/js/dashboard/reservations.js": {
+    "file": "assets/reservations-49d45d1e.js",
+    "isEntry": true,
+    "src": "resources/js/dashboard/reservations.js"
+  }
+}

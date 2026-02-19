@@ -1,9 +1,10 @@
 {
-  "builds": [
+  "public": "public",
+  "cleanUrls": false,
+  "routes": [
     {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "public" }
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
